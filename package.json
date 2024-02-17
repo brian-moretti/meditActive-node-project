@@ -1,0 +1,31 @@
+{
+  "name": "node.js-project",
+  "description": "",
+  "version": "1.0.0",
+  "main": "app.js",
+  "scripts": {
+    "test": "mocha '**/**.spec.js'",
+    "coverage": "nyc --reporter=html --reporter=text npm run test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/brian-moretti/meditActive-node-project.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/brian-moretti/meditActive-node-project/issues"
+  },
+  "homepage": "https://github.com/brian-moretti/meditActive-node-project#readme",
+  "dependencies": {
+    "chai": "^4.3.7",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "mocha": "^10.2.0",
+    "mongodb": "^6.3.0",
+    "mysql2": "^3.7.0",
+    "nodemon": "^3.0.2",
+    "nyc": "^15.1.0",
+    "sinon": "^17.0.1"
+  }
+}
