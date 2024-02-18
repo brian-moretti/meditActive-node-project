@@ -8,7 +8,7 @@ const uriDynamic = `${configDb.mongo_connection}${configDb.user}:${configDb.pass
 const uriStatic =
   "mongodb+srv://root:qvtQtW2yO8ABDIpG@project-node-s2i.dl6rpik.mongodb.net/meditActive-project?retryWrites=true&w=majority";
 
-const client = new MongoClient(uriDynamic);
+const client = new MongoClient(uriStatic);
 
 async function connectToDb() {
   try {
