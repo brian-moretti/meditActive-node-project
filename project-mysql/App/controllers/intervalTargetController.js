@@ -77,7 +77,7 @@ const intervalTarget_delete = async (req, res) => {
     if (result.affectedRows <= 0) {
       return res.status(404).json({ Error: "Interval not founded" });
     }
-    res.status(200).json({ "ID Deleted": deletedInterval });
+    res.status(200).json({ "Interval Target Deleted": deletedInterval });
     //res.redirect("/interval-target");
   } catch (error) {
     console.error(error);

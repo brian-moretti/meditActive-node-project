@@ -4,7 +4,7 @@ class IntervalTarget {
   static table_name = "interval_target";
 
   static async getAll(req) {
-    let query = `SELECT title, description, interval_target.id, date_start, date_end, user_id, name, surname, email FROM ${IntervalTarget.table_name} INNER JOIN users ON users.id = user_id INNER JOIN target_goal ON target_goal.id = goal_id `;
+    let query = `SELECT goal_id, title, description, interval_target.id, date_start, date_end, user_id, name, surname, email FROM ${IntervalTarget.table_name} INNER JOIN users ON users.id = user_id INNER JOIN goal ON goal.id = goal_id `;
 
     let fromDateStart = req.date_start ?? null;
     let fromDateEnd = req.date_end ?? null;
@@ -33,7 +33,7 @@ class IntervalTarget {
   }
 
   static async getIntervalTarget(id) {
-    const query = `SELECT interval_target.id, date_start, date_end, user_id, name, surname, goal_id, title, description FROM ${IntervalTarget.table_name} INNER JOIN users ON users.id = user_id INNER JOIN target_goal ON target_goal.id = goal_id WHERE interval_target.id = ?`;
+    const query = `SELECT interval_target.id, date_start, date_end, user_id, name, surname, goal_id, title, description FROM ${IntervalTarget.table_name} INNER JOIN users ON users.id = user_id INNER JOIN goal ON goal.id = goal_id WHERE interval_target.id = ?`;
     return await connectAndQuery(query, id);
   }
 
