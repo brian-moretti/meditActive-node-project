@@ -3,7 +3,7 @@
 <html lang="en">
 
 <head>
-    <title>Code coverage report for project-mongo/Core/Database.js</title>
+    <title>Code coverage report for project-mongo/Api/importApi.js</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="../../prettify.css" />
     <link rel="stylesheet" href="../../base.css" />
@@ -19,13 +19,13 @@
 <body>
 <div class='wrapper'>
     <div class='pad1'>
-        <h1><a href="../../index.html">All files</a> / <a href="index.html">project-mongo/Core</a> Database.js</h1>
+        <h1><a href="../../index.html">All files</a> / <a href="index.html">project-mongo/Api</a> importApi.js</h1>
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>0/10</span>
+                <span class='fraction'>0/13</span>
             </div>
         
             
@@ -39,14 +39,14 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>0/1</span>
+                <span class='fraction'>0/2</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>0/10</span>
+                <span class='fraction'>0/13</span>
             </div>
         
             
@@ -87,12 +87,6 @@
 <a name='L22'></a><a href='#L22'>22</a>
 <a name='L23'></a><a href='#L23'>23</a></td><td class="line-coverage quiet"><span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -100,6 +94,12 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -107,28 +107,28 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">const { MongoClient } = <span class="cstat-no" title="statement not covered" >require("mongodb");</span>
-const configDb = <span class="cstat-no" title="statement not covered" >require("../config");</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">const fs = <span class="cstat-no" title="statement not covered" >require("fs");</span>
+const Goal = <span class="cstat-no" title="statement not covered" >require("../App/models/goal");</span>
+const { connectToDb } = <span class="cstat-no" title="statement not covered" >require("../Core/Database");</span>
 &nbsp;
-// URI when config is defined globally
-const uriDynamic = <span class="cstat-no" title="statement not covered" >`${configDb.mongo_connection}${configDb.user}:${configDb.password}@${configDb.mongo_project}/${configDb.database}${configDb.db_option}`;</span>
+let jsonData = <span class="cstat-no" title="statement not covered" >JSON.parse(fs.readFileSync(`${__dirname}/goal.json`));</span>
 &nbsp;
-// URI when config is defined in local for testing
-const uriStatic =
-<span class="cstat-no" title="statement not covered" >  "mongodb+srv://root:qvtQtW2yO8ABDIpG@project-node-s2i.dl6rpik.mongodb.net/meditActive-project?retryWrites=true&amp;w=majority";</span>
-&nbsp;
-const client = <span class="cstat-no" title="statement not covered" >new MongoClient(uriStatic);</span>
-&nbsp;
-async function <span class="fstat-no" title="function not covered" >connectToDb(</span>) {
-<span class="cstat-no" title="statement not covered" >  try {</span>
-<span class="cstat-no" title="statement not covered" >    await client.connect();</span>
-<span class="cstat-no" title="statement not covered" >    return client.db();</span>
-  } catch (error) {
-<span class="cstat-no" title="statement not covered" >    return error;</span>
-  }
+async function <span class="fstat-no" title="function not covered" >createMany(</span>json) {
+  const db = <span class="cstat-no" title="statement not covered" >await connectToDb();</span>
+<span class="cstat-no" title="statement not covered" >  return await db.collection(Goal.collection).insertMany(json);</span>
 }
 &nbsp;
-<span class="cstat-no" title="statement not covered" >module.exports = { connectToDb };</span>
+const importData = <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >as</span>ync () =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >  try {</span>
+<span class="cstat-no" title="statement not covered" >    await createMany(jsonData);</span>
+<span class="cstat-no" title="statement not covered" >    console.log("Data imported successfully");</span>
+<span class="cstat-no" title="statement not covered" >    process.exit();</span>
+  } catch (error) {
+<span class="cstat-no" title="statement not covered" >    console.error(error);</span>
+  }
+};
+&nbsp;
+<span class="cstat-no" title="statement not covered" >importData();</span>
 &nbsp;</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->

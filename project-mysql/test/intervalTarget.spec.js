@@ -124,7 +124,7 @@ describe("testing interval_create controller function", () => {
     expect(
       res.json.calledOnceWith({
         ID: fakeQueryResult.insertId,
-        interval: req.body,
+        Interval: req.body,
       })
     ).to.be.true;
   });

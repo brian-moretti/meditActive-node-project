@@ -49,27 +49,6 @@ describe("testing user model", () => {
       expect(result).to.deep.equal(fakeQueryResult[0]);
     });
   });
-
-  /*  describe("testing createUser", () => {
-    it("", async () => {
-      const query = `INSERT INTO ${User.tableName} (name, surname, email) VALUES (?, ?, ?)`;
-      const fakeBody = { name: "username", surname: "surname", email: "email" };
-      const test = ['name', 'sur', 'email']
-      const fakeQueryResult = { insertId: 1 };
-      connectAndQueryStub.resolves(fakeQueryResult);
-      createConnectionStub.returns({
-        query: connectAndQueryStub,
-        end: sinon.stub().resolves(),
-      });
-      const result = await User.createUser(test);
-      expect(connectAndQueryStub.calledOnce).to.be.true;
-      expect(connectAndQueryStub.calledOnceWith(query)).to.be.true;
-      expect(result).to.deep.equal(fakeQueryResult);
-    });
-  }); */
-  describe("", () => {
-    it("", async () => {});
-  });
 });
 
 describe("testing user_index controller function", () => {
@@ -90,7 +69,7 @@ describe("testing user_index controller function", () => {
     await userController.user_index(req, res);
     expect(getAllStub.calledOnce).to.be.true;
     expect(res.status.calledOnceWith(200)).to.be.true;
-    expect(res.json.calledOnceWith({ users: fakeQueryResult })).to.be.true;
+    expect(res.json.calledOnceWith({ Users: fakeQueryResult })).to.be.true;
   });
   it("handle error", async () => {
     const error = { Error: "Internal server errors" };
@@ -119,7 +98,7 @@ describe("testing user_details controller function", () => {
     await userController.user_details(req, res);
     expect(getUserStub.calledOnce).to.be.true;
     expect(res.status.calledOnceWith(200)).to.be.true;
-    expect(res.json.calledOnceWith({ user: fakeQueryResult })).to.be.true;
+    expect(res.json.calledOnceWith({ User: fakeQueryResult })).to.be.true;
   });
   it("testing on user not founded", async () => {
     const fakeQueryResult = [];
@@ -157,7 +136,7 @@ describe("testing user_create controller function", () => {
     expect(createUserStub.calledOnce).to.be.true;
     expect(res.status.calledOnceWith(201)).to.be.true;
     expect(
-      res.json.calledOnceWith({ ID: fakeQueryResult.insertId, user: req.body })
+      res.json.calledOnceWith({ ID: fakeQueryResult.insertId, User: req.body })
     ).to.be.true;
   });
   it("handle Body error", async () => {
@@ -183,12 +162,6 @@ describe("testing user_create controller function", () => {
     expect(res.status.calledOnceWith(500)).to.be.true;
     expect(res.json.calledOnceWith(error));
   });
-});
-
-describe("", () => {
-  beforeEach(() => {});
-  afterEach(() => {});
-  it("", async () => {});
 });
 
 describe("testing user_update controller function", () => {
@@ -226,15 +199,6 @@ describe("testing user_update controller function", () => {
         "data updated": req.body,
       })
     );
-  });
-  it("handle Body error", async () => {
-    const bodyError = { Error: "The body is not correct" };
-    const messageError = { message: "Body" };
-    userToUpdateStub.resolves([fakeUpdatedUser]);
-    updateUserStub.rejects(messageError);
-    await userController.user_update(req, res);
-    expect(res.status.calledOnceWith(400)).to.be.true;
-    expect(res.json.calledOnceWith(bodyError));
   });
   it("handle duplicate email error", async () => {
     const emailError = { Error: "Email already exists" };

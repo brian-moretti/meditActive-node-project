@@ -25,7 +25,7 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>0/47</span>
+                <span class='fraction'>0/46</span>
             </div>
         
             
@@ -46,7 +46,7 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>0/47</span>
+                <span class='fraction'>0/46</span>
             </div>
         
             
@@ -154,8 +154,7 @@
 <a name='L89'></a><a href='#L89'>89</a>
 <a name='L90'></a><a href='#L90'>90</a>
 <a name='L91'></a><a href='#L91'>91</a>
-<a name='L92'></a><a href='#L92'>92</a>
-<a name='L93'></a><a href='#L93'>93</a></td><td class="line-coverage quiet"><span class="cline-any cline-no">&nbsp;</span>
+<a name='L92'></a><a href='#L92'>92</a></td><td class="line-coverage quiet"><span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -201,7 +200,6 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -252,7 +250,7 @@
 const user_index = <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >as</span>ync (req, res) =&gt; {</span>
 <span class="cstat-no" title="statement not covered" >  try {</span>
     const result = <span class="cstat-no" title="statement not covered" >await User.getAll();</span>
-<span class="cstat-no" title="statement not covered" >    res.status(200).json({ users: result });</span>
+<span class="cstat-no" title="statement not covered" >    res.status(200).json({ Users: result });</span>
   } catch (error) {
 <span class="cstat-no" title="statement not covered" >    console.error(error);</span>
 <span class="cstat-no" title="statement not covered" >    res.status(500).json({ Error: "Internal server errors" });</span>
@@ -265,7 +263,7 @@ const user_details = <span class="cstat-no" title="statement not covered" ><span
 <span class="cstat-no" title="statement not covered" >    if (result === null) {</span>
 <span class="cstat-no" title="statement not covered" >      return res.status(404).json({ Error: "User not founded" });</span>
     }
-<span class="cstat-no" title="statement not covered" >    res.status(200).json({ user: result });</span>
+<span class="cstat-no" title="statement not covered" >    res.status(200).json({ User: result });</span>
   } catch (error) {
 <span class="cstat-no" title="statement not covered" >    console.error(error);</span>
 <span class="cstat-no" title="statement not covered" >    if (error.message === "Id not valid") {</span>
@@ -279,7 +277,7 @@ const user_details = <span class="cstat-no" title="statement not covered" ><span
 const user_create = <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >as</span>ync (req, res) =&gt; {</span>
 <span class="cstat-no" title="statement not covered" >  try {</span>
 <span class="cstat-no" title="statement not covered" >    await User.createUser(req.body);</span>
-<span class="cstat-no" title="statement not covered" >    res.status(201).json({ user: req.body });</span>
+<span class="cstat-no" title="statement not covered" >    res.status(201).json({ User: req.body });</span>
     //res.redirect("/users");
   } catch (error) {
 <span class="cstat-no" title="statement not covered" >    console.error(error);</span>
@@ -296,13 +294,12 @@ const user_create = <span class="cstat-no" title="statement not covered" ><span 
 const user_update = <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >as</span>ync (req, res) =&gt; {</span>
 <span class="cstat-no" title="statement not covered" >  try {</span>
     let userToUpdate = <span class="cstat-no" title="statement not covered" >await User.getUser(req.params.id);</span>
-<span class="cstat-no" title="statement not covered" >    console.log(userToUpdate);</span>
     const result = <span class="cstat-no" title="statement not covered" >await User.updateUser(userToUpdate, req.body);</span>
     //? OCCHIO ALLA CONDIZIONE
 <span class="cstat-no" title="statement not covered" >    if (result.modifiedCount &gt;= 0) {</span>
 <span class="cstat-no" title="statement not covered" >      res</span>
         .status(200)
-        .json({ "Update ID": userToUpdate._id, "data updated": req.body });
+        .json({ "Update ID": userToUpdate._id, "User updated": req.body });
     }
   } catch (error) {
 <span class="cstat-no" title="statement not covered" >    console.error(error);</span>
@@ -346,7 +343,7 @@ const user_delete = <span class="cstat-no" title="statement not covered" ><span 
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2024-02-12T16:39:13.870Z
+                at 2024-02-18T15:12:59.269Z
             </div>
         <script src="../../../prettify.js"></script>
         <script>

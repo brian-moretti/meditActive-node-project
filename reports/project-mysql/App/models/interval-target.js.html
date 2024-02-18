@@ -23,16 +23,16 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">8.57% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>0/36</span>
+                <span class='fraction'>3/35</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>0/30</span>
+                <span class='fraction'>0/28</span>
             </div>
         
             
@@ -44,9 +44,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">8.57% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>0/36</span>
+                <span class='fraction'>3/35</span>
             </div>
         
             
@@ -131,18 +131,14 @@
 <a name='L66'></a><a href='#L66'>66</a>
 <a name='L67'></a><a href='#L67'>67</a>
 <a name='L68'></a><a href='#L68'>68</a>
-<a name='L69'></a><a href='#L69'>69</a>
-<a name='L70'></a><a href='#L70'>70</a>
-<a name='L71'></a><a href='#L71'>71</a>
-<a name='L72'></a><a href='#L72'>72</a></td><td class="line-coverage quiet"><span class="cline-any cline-no">&nbsp;</span>
+<a name='L69'></a><a href='#L69'>69</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -150,7 +146,6 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -186,7 +181,6 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -204,25 +198,23 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">const connectAndQuery = <span class="cstat-no" title="statement not covered" >require("../../Core/Database");</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">const connectAndQuery = require("../../Core/Database");
 &nbsp;
 class IntervalTarget {
-  static table_name = <span class="cstat-no" title="statement not covered" >"interval_target";</span>
+  static table_name = "interval_target";
 &nbsp;
 <span class="fstat-no" title="function not covered" >  st</span>atic async getAll(req) {
-    let query = <span class="cstat-no" title="statement not covered" >`SELECT title, description, date_start, date_end, user_id, name, surname, email FROM ${IntervalTarget.table_name} INNER JOIN users ON users.id = user_id INNER JOIN target_goal ON target_goal.id = goal_id `;</span>
+    let query = <span class="cstat-no" title="statement not covered" >`SELECT goal_id, title, description, interval_target.id, date_start, date_end, user_id, name, surname, email FROM ${IntervalTarget.table_name} INNER JOIN users ON users.id = user_id INNER JOIN goal ON goal.id = goal_id `;</span>
 &nbsp;
     let fromDateStart = <span class="cstat-no" title="statement not covered" >req.date_start ?? null;</span>
     let fromDateEnd = <span class="cstat-no" title="statement not covered" >req.date_end ?? null;</span>
-    let goalID = <span class="cstat-no" title="statement not covered" >req.goal_id ?? null;</span>
     let goalTitle = <span class="cstat-no" title="statement not covered" >req.goal_title ?? null;</span>
     let params = <span class="cstat-no" title="statement not covered" >[];</span>
 &nbsp;
 <span class="cstat-no" title="statement not covered" >    if (fromDateStart &gt; fromDateEnd) {</span>
 <span class="cstat-no" title="statement not covered" >      throw new Error("Date");</span>
     }
-&nbsp;
 <span class="cstat-no" title="statement not covered" >    if (fromDateStart) {</span>
 <span class="cstat-no" title="statement not covered" >      query += `WHERE date_start &gt;= ?`;</span>
 <span class="cstat-no" title="statement not covered" >      params.push(fromDateStart);</span>
@@ -242,7 +234,7 @@ class IntervalTarget {
   }
 &nbsp;
 <span class="fstat-no" title="function not covered" >  st</span>atic async getIntervalTarget(id) {
-    const query = <span class="cstat-no" title="statement not covered" >`SELECT interval_target.id, date_start, date_end, user_id, name, surname, goal_id, title, description FROM ${IntervalTarget.table_name} INNER JOIN users ON users.id = user_id INNER JOIN target_goal ON target_goal.id = goal_id WHERE interval_target.id = ?`;</span>
+    const query = <span class="cstat-no" title="statement not covered" >`SELECT interval_target.id, date_start, date_end, user_id, name, surname, goal_id, title, description FROM ${IntervalTarget.table_name} INNER JOIN users ON users.id = user_id INNER JOIN goal ON goal.id = goal_id WHERE interval_target.id = ?`;</span>
 <span class="cstat-no" title="statement not covered" >    return await connectAndQuery(query, id);</span>
   }
 &nbsp;
@@ -257,7 +249,6 @@ class IntervalTarget {
 &nbsp;
 <span class="fstat-no" title="function not covered" >  st</span>atic async updateIntervalTarget(currentData, body) {
     const query = <span class="cstat-no" title="statement not covered" >`UPDATE ${IntervalTarget.table_name} SET date_start = ?, date_end = ?, goal_id = ? WHERE id = ?`;</span>
-    //? FORSE GOAL_ID
     const newData = <span class="cstat-no" title="statement not covered" >[</span>
       body.date_start ?? currentData.date_start,
       body.date_end ?? currentData.date_end,
@@ -275,7 +266,7 @@ class IntervalTarget {
   }
 }
 &nbsp;
-<span class="cstat-no" title="statement not covered" >module.exports = IntervalTarget;</span>
+module.exports = IntervalTarget;
 &nbsp;</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->
@@ -283,7 +274,7 @@ class IntervalTarget {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2024-02-12T16:39:13.870Z
+                at 2024-02-18T15:12:59.269Z
             </div>
         <script src="../../../prettify.js"></script>
         <script>
