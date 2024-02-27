@@ -2,7 +2,7 @@ const User = require("../models/user");
 
 const user_index = async (req, res) => {
   try {
-    const result = await User.getAll();
+    const result = await User.getAll(req.params);
     res.status(200).json({ Users: result });
   } catch (error) {
     console.error(error);

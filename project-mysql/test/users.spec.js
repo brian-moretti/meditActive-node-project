@@ -1,7 +1,7 @@
 const sinon = require("sinon");
 const { expect } = require("chai");
 const User = require("../App/models/user");
-const userController = require("../App/controllers/userController");
+const usersController = require("../App/controllers/usersController");
 const mySql = require("mysql2/promise");
 
 describe("testing user model", () => {
@@ -66,7 +66,7 @@ describe("testing user_index controller function", () => {
       { id: 1, name: "John", surname: "Doe", email: "johndoe@test.com" },
     ];
     getAllStub.resolves(fakeQueryResult);
-    await userController.user_index(req, res);
+    await usersController.user_index(req, res);
     expect(getAllStub.calledOnce).to.be.true;
     expect(res.status.calledOnceWith(200)).to.be.true;
     expect(res.json.calledOnceWith({ Users: fakeQueryResult })).to.be.true;
@@ -74,7 +74,7 @@ describe("testing user_index controller function", () => {
   it("handle error", async () => {
     const error = { Error: "Internal server errors" };
     getAllStub.rejects(error);
-    await userController.user_index(req, res);
+    await usersController.user_index(req, res);
     expect(res.status.calledOnceWith(500)).to.be.true;
     expect(res.json.calledOnceWith(error));
   });
@@ -95,7 +95,7 @@ describe("testing user_details controller function", () => {
       { id: 1, name: "John", surname: "Doe", email: "johndoe@test.com" },
     ];
     getUserStub.resolves(fakeQueryResult);
-    await userController.user_details(req, res);
+    await usersController.user_details(req, res);
     expect(getUserStub.calledOnce).to.be.true;
     expect(res.status.calledOnceWith(200)).to.be.true;
     expect(res.json.calledOnceWith({ User: fakeQueryResult })).to.be.true;
@@ -104,7 +104,7 @@ describe("testing user_details controller function", () => {
     const fakeQueryResult = [];
     const userNotFound = { Error: "User not founded" };
     getUserStub.resolves(fakeQueryResult);
-    await userController.user_details(req, res);
+    await usersController.user_details(req, res);
     expect(getUserStub.calledOnce).to.be.true;
     expect(res.status.calledOnceWith(404)).to.be.true;
     expect(res.json.calledOnceWith(userNotFound));
@@ -112,7 +112,7 @@ describe("testing user_details controller function", () => {
   it("handle error", async () => {
     const error = { Error: "Internal server errors" };
     getUserStub.rejects(error);
-    await userController.user_details(req, res);
+    await usersController.user_details(req, res);
     expect(res.status.calledOnceWith(500)).to.be.true;
     expect(res.json.calledOnceWith(error));
   });
@@ -132,7 +132,7 @@ describe("testing user_create controller function", () => {
   it("testing on success", async () => {
     const fakeQueryResult = { insertId: 1 };
     createUserStub.resolves(fakeQueryResult);
-    await userController.user_create(req, res);
+    await usersController.user_create(req, res);
     expect(createUserStub.calledOnce).to.be.true;
     expect(res.status.calledOnceWith(201)).to.be.true;
     expect(
@@ -143,7 +143,7 @@ describe("testing user_create controller function", () => {
     const bodyError = { Error: "The body is not correct" };
     const messageError = { message: "Body" };
     createUserStub.rejects(messageError);
-    await userController.user_create(req, res);
+    await usersController.user_create(req, res);
     expect(res.status.calledOnceWith(400)).to.be.true;
     expect(res.json.calledOnceWith(bodyError));
   });
@@ -151,14 +151,14 @@ describe("testing user_create controller function", () => {
     const emailError = { Error: "Email already exists" };
     const codeError = { code: "ER_DUP_ENTRY" };
     createUserStub.rejects(codeError);
-    await userController.user_create(req, res);
+    await usersController.user_create(req, res);
     expect(res.status.calledOnceWith(400)).to.be.true;
     expect(res.json.calledOnceWith(emailError));
   });
   it("handle errors", async () => {
     const error = { Error: "Internal server errors" };
     createUserStub.rejects(error);
-    await userController.user_create(req, res);
+    await usersController.user_create(req, res);
     expect(res.status.calledOnceWith(500)).to.be.true;
     expect(res.json.calledOnceWith(error));
   });
@@ -190,7 +190,7 @@ describe("testing user_update controller function", () => {
     const fakeQueryResult = { affectedRows: 1 };
     userToUpdateStub.resolves([fakeUpdatedUser]);
     updateUserStub.resolves(fakeQueryResult);
-    await userController.user_update(req, res);
+    await usersController.user_update(req, res);
     expect(updateUserStub.calledOnce).to.be.true;
     expect(res.status.calledOnceWith(200)).to.be.true;
     expect(
@@ -205,7 +205,7 @@ describe("testing user_update controller function", () => {
     const codeError = { code: "ER_DUP_ENTRY" };
     userToUpdateStub.resolves([fakeUpdatedUser]);
     updateUserStub.rejects(codeError);
-    await userController.user_update(req, res);
+    await usersController.user_update(req, res);
     expect(res.status.calledOnceWith(400)).to.be.true;
     expect(res.json.calledOnceWith(emailError));
   });
@@ -213,7 +213,7 @@ describe("testing user_update controller function", () => {
     const error = { Error: "Internal server errors" };
     userToUpdateStub.resolves([fakeUpdatedUser]);
     updateUserStub.rejects(error);
-    await userController.user_update(req, res);
+    await usersController.user_update(req, res);
     expect(res.status.calledOnceWith(500)).to.be.true;
     expect(res.json.calledOnceWith(error));
   });
@@ -241,7 +241,7 @@ describe("testing user_delete controller function", () => {
   it("testing user_delete on success", async () => {
     const fakeQueryResult = { affectedRows: 1 };
     deleteUserStub.resolves([fakeQueryResult, fakeDeletedUser]);
-    await userController.user_delete(req, res);
+    await usersController.user_delete(req, res);
     expect(deleteUserStub.calledOnce).to.be.true;
     expect(res.status.calledOnceWith(200)).to.be.true;
     expect(res.json.calledOnceWith({ "user deleted": fakeDeletedUser }));
@@ -251,7 +251,7 @@ describe("testing user_delete controller function", () => {
     const error = { Error: "User not founded" };
     const fakeQueryResult = { affectedRows: 0 };
     deleteUserStub.resolves([fakeQueryResult, fakeDeletedUser]);
-    await userController.user_delete(req, res);
+    await usersController.user_delete(req, res);
     expect(res.status.calledOnceWith(404)).to.be.true;
     expect(res.json.calledOnceWith(error));
   });
@@ -259,7 +259,7 @@ describe("testing user_delete controller function", () => {
   it("handle user_delete error", async () => {
     const error = { Error: "Internal server errors" };
     deleteUserStub.rejects(error);
-    await userController.user_delete(req, res);
+    await usersController.user_delete(req, res);
     expect(res.status.calledOnceWith(500)).to.be.true;
     expect(res.json.calledOnceWith(error));
   });

@@ -4,12 +4,17 @@ const { connectToDb } = require("../../Core/Database");
 class User {
   static collection = "users";
 
-  static async getAll() {
+  static async getAll(params) {
+    const page = params.page || 0;
+    const maxUsers = 5;
+    const offsetData = page == 1 ? 0 : (page - 1) * maxUsers;
     const db = await connectToDb();
     return await db
       .collection(this.collection)
       .find()
       .sort({ name: 1 })
+      .skip(1)
+      .limit(maxUsers)
       .toArray();
   }
 

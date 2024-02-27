@@ -4,6 +4,7 @@
   "version": "1.0.0",
   "main": "app.js",
   "scripts": {
+    "dev": "node --watch app.js",
     "test": "mocha '**/**.spec.js'",
     "coverage": "nyc --reporter=html --reporter=text npm run test"
   },

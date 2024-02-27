@@ -3,8 +3,11 @@ const connectAndQuery = require("../../Core/Database");
 class User {
   static tableName = "users";
 
-  static async getAll() {
-    const query = `SELECT * FROM ${this.tableName}`;
+  static async getAll(params) {
+    const page = params.page || 0;
+    const maxUsers = 5;
+    const offsetData = page == 1 ? 0 : (page - 1) * maxUsers;
+    const query = `SELECT * FROM ${this.tableName} LIMIT ${maxUsers} OFFSET ${offsetData}`;
     return await connectAndQuery(query);
   }
 

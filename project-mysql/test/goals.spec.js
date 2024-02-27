@@ -1,7 +1,7 @@
 const sinon = require("sinon");
 const { expect } = require("chai");
 const Goal = require("../App/models/goal");
-const goalController = require("../App/controllers/goalController");
+const goalsController = require("../App/controllers/goalsController");
 const mySql = require("mysql2/promise");
 
 describe("testing goal model", () => {
@@ -66,7 +66,7 @@ describe("testing Goal_index controller function", () => {
       { id: 1, title: "title", description: "description" },
     ];
     getAllStub.resolves(fakeQueryResult);
-    await goalController.goal_index(req, res);
+    await goalsController.goal_index(req, res);
     expect(getAllStub.calledOnce).to.be.true;
     expect(res.status.calledOnceWith(200)).to.be.true;
     expect(res.json.calledOnceWith({ Goal: fakeQueryResult })).to.be.true;
@@ -74,7 +74,7 @@ describe("testing Goal_index controller function", () => {
   it("handle error", async () => {
     const error = { Error: "Internal server errors" };
     getAllStub.rejects(error);
-    await goalController.goal_index(req, res);
+    await goalsController.goal_index(req, res);
     expect(res.status.calledOnceWith(500)).to.be.true;
     expect(res.json.calledOnceWith(error));
   });
@@ -95,7 +95,7 @@ describe("testing Goal_details controller function", () => {
       { id: 1, title: "title", description: "description" },
     ];
     getGoalStub.resolves(fakeQueryResult);
-    await goalController.goal_details(req, res);
+    await goalsController.goal_details(req, res);
     expect(getGoalStub.calledOnce).to.be.true;
     expect(res.status.calledOnceWith(200)).to.be.true;
     expect(res.json.calledOnceWith({ Goal: fakeQueryResult })).to.be.true;
@@ -104,7 +104,7 @@ describe("testing Goal_details controller function", () => {
     const fakeQueryResult = [];
     const GoalNotFound = { Error: "Goal not founded" };
     getGoalStub.resolves(fakeQueryResult);
-    await goalController.goal_details(req, res);
+    await goalsController.goal_details(req, res);
     expect(getGoalStub.calledOnce).to.be.true;
     expect(res.status.calledOnceWith(404)).to.be.true;
     expect(res.json.calledOnceWith(GoalNotFound));
@@ -112,7 +112,7 @@ describe("testing Goal_details controller function", () => {
   it("handle error", async () => {
     const error = { Error: "Internal server errors" };
     getGoalStub.rejects(error);
-    await goalController.goal_details(req, res);
+    await goalsController.goal_details(req, res);
     expect(res.status.calledOnceWith(500)).to.be.true;
     expect(res.json.calledOnceWith(error));
   });
@@ -132,7 +132,7 @@ describe("testing Goal_create controller function", () => {
   it("testing on success", async () => {
     const fakeQueryResult = { insertId: 1 };
     createGoalStub.resolves(fakeQueryResult);
-    await goalController.goal_create(req, res);
+    await goalsController.goal_create(req, res);
     expect(createGoalStub.calledOnce).to.be.true;
     expect(res.status.calledOnceWith(201)).to.be.true;
     expect(
@@ -143,14 +143,14 @@ describe("testing Goal_create controller function", () => {
     const bodyError = { Error: "The body is not correct" };
     const messageError = { message: "Body" };
     createGoalStub.rejects(messageError);
-    await goalController.goal_create(req, res);
+    await goalsController.goal_create(req, res);
     expect(res.status.calledOnceWith(400)).to.be.true;
     expect(res.json.calledOnceWith(bodyError));
   });
   it("handle errors", async () => {
     const error = { Error: "Internal server errors" };
     createGoalStub.rejects(error);
-    await goalController.goal_create(req, res);
+    await goalsController.goal_create(req, res);
     expect(res.status.calledOnceWith(500)).to.be.true;
     expect(res.json.calledOnceWith(error));
   });
@@ -181,7 +181,7 @@ describe("testing Goal_update controller function", () => {
     const fakeQueryResult = { affectedRows: 1 };
     GoalToUpdateStub.resolves([fakeUpdatedGoal]);
     updateGoalStub.resolves(fakeQueryResult);
-    await goalController.goal_update(req, res);
+    await goalsController.goal_update(req, res);
     expect(updateGoalStub.calledOnce).to.be.true;
     expect(res.status.calledOnceWith(200)).to.be.true;
     expect(
@@ -195,7 +195,7 @@ describe("testing Goal_update controller function", () => {
     const error = { Error: "Internal server errors" };
     GoalToUpdateStub.resolves([fakeUpdatedGoal]);
     updateGoalStub.rejects(error);
-    await goalController.goal_update(req, res);
+    await goalsController.goal_update(req, res);
     expect(res.status.calledOnceWith(500)).to.be.true;
     expect(res.json.calledOnceWith(error));
   });
@@ -222,7 +222,7 @@ describe("testing Goal_delete controller function", () => {
   it("testing Goal_delete on success", async () => {
     const fakeQueryResult = { affectedRows: 1 };
     deleteGoalStub.resolves([fakeQueryResult, fakeDeletedGoal]);
-    await goalController.goal_delete(req, res);
+    await goalsController.goal_delete(req, res);
     expect(deleteGoalStub.calledOnce).to.be.true;
     expect(res.status.calledOnceWith(200)).to.be.true;
     expect(res.json.calledOnceWith({ "Goal deleted": fakeDeletedGoal }));
@@ -232,7 +232,7 @@ describe("testing Goal_delete controller function", () => {
     const error = { Error: "Goal not founded" };
     const fakeQueryResult = { affectedRows: 0 };
     deleteGoalStub.resolves([fakeQueryResult, fakeDeletedGoal]);
-    await goalController.goal_delete(req, res);
+    await goalsController.goal_delete(req, res);
     expect(res.status.calledOnceWith(404)).to.be.true;
     expect(res.json.calledOnceWith(error));
   });
@@ -240,7 +240,7 @@ describe("testing Goal_delete controller function", () => {
   it("handle Goal_delete error", async () => {
     const error = { Error: "Internal server errors" };
     deleteGoalStub.rejects(error);
-    await goalController.goal_delete(req, res);
+    await goalsController.goal_delete(req, res);
     expect(res.status.calledOnceWith(500)).to.be.true;
     expect(res.json.calledOnceWith(error));
   });
