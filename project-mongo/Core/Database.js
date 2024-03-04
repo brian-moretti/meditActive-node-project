@@ -10,7 +10,7 @@ const uriStatic =
 
 const client = new MongoClient(uriStatic);
 
-async function connectToDb() {
+async function MongoConnectToDb() {
   try {
     await client.connect();
     return client.db();
@@ -19,4 +19,4 @@ async function connectToDb() {
   }
 }
 
-module.exports = { connectToDb };
+module.exports = { MongoConnectToDb };

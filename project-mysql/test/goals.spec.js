@@ -1,6 +1,6 @@
 const sinon = require("sinon");
 const { expect } = require("chai");
-const Goal = require("../App/models/goal");
+const Goal = require("../App/models/Goal");
 const goalsController = require("../App/controllers/goalsController");
 const mySql = require("mysql2/promise");
 

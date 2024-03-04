@@ -1,68 +1,66 @@
-
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <title>Code coverage report for project-mysql/App/models/interval-target.js</title>
+  <head>
+    <title>
+      Code coverage report for project-mysql/App/models/interval-target.js
+    </title>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="../../../prettify.css" />
     <link rel="stylesheet" href="../../../base.css" />
     <link rel="shortcut icon" type="image/x-icon" href="../../../favicon.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <style type='text/css'>
-        .coverage-summary .sorter {
-            background-image: url(../../../sort-arrow-sprite.png);
-        }
+    <style type="text/css">
+      .coverage-summary .sorter {
+        background-image: url(../../../sort-arrow-sprite.png);
+      }
     </style>
-</head>
-    
-<body>
-<div class='wrapper'>
-    <div class='pad1'>
-        <h1><a href="../../../index.html">All files</a> / <a href="index.html">project-mysql/App/models</a> interval-target.js</h1>
-        <div class='clearfix'>
-            
-            <div class='fl pad1y space-right2'>
-                <span class="strong">8.57% </span>
-                <span class="quiet">Statements</span>
-                <span class='fraction'>3/35</span>
-            </div>
-        
-            
-            <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
-                <span class="quiet">Branches</span>
-                <span class='fraction'>0/28</span>
-            </div>
-        
-            
-            <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
-                <span class="quiet">Functions</span>
-                <span class='fraction'>0/5</span>
-            </div>
-        
-            
-            <div class='fl pad1y space-right2'>
-                <span class="strong">8.57% </span>
-                <span class="quiet">Lines</span>
-                <span class='fraction'>3/35</span>
-            </div>
-        
-            
+  </head>
+
+  <body>
+    <div class="wrapper">
+      <div class="pad1">
+        <h1>
+          <a href="../../../index.html">All files</a> /
+          <a href="index.html">project-mysql/App/models</a> interval-target.js
+        </h1>
+        <div class="clearfix">
+          <div class="fl pad1y space-right2">
+            <span class="strong">8.57% </span>
+            <span class="quiet">Statements</span>
+            <span class="fraction">3/35</span>
+          </div>
+
+          <div class="fl pad1y space-right2">
+            <span class="strong">0% </span>
+            <span class="quiet">Branches</span>
+            <span class="fraction">0/28</span>
+          </div>
+
+          <div class="fl pad1y space-right2">
+            <span class="strong">0% </span>
+            <span class="quiet">Functions</span>
+            <span class="fraction">0/5</span>
+          </div>
+
+          <div class="fl pad1y space-right2">
+            <span class="strong">8.57% </span>
+            <span class="quiet">Lines</span>
+            <span class="fraction">3/35</span>
+          </div>
         </div>
         <p class="quiet">
-            Press <em>n</em> or <em>j</em> to go to the next uncovered block, <em>b</em>, <em>p</em> or <em>k</em> for the previous block.
+          Press <em>n</em> or <em>j</em> to go to the next uncovered block,
+          <em>b</em>, <em>p</em> or <em>k</em> for the previous block.
         </p>
         <template id="filterTemplate">
-            <div class="quiet">
-                Filter:
-                <input oninput="onInput()" type="search" id="fileSearch">
-            </div>
+          <div class="quiet">
+            Filter:
+            <input oninput="onInput()" type="search" id="fileSearch" />
+          </div>
         </template>
-    </div>
-    <div class='status-line low'></div>
-    <pre><table class="coverage">
+      </div>
+      <div class="status-line low"></div>
+      <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
 <a name='L3'></a><a href='#L3'>3</a>
@@ -199,7 +197,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">const connectAndQuery = require("../../Core/Database");
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">const mySqlConnectAndQuery = require("../../Core/Database");
 &nbsp;
 class IntervalTarget {
   static table_name = "interval_target";
@@ -230,12 +228,12 @@ class IntervalTarget {
 <span class="cstat-no" title="statement not covered" >      params.push(goalTitle);</span>
     }
 <span class="cstat-no" title="statement not covered" >    query += ` ORDER BY users.id`;</span>
-<span class="cstat-no" title="statement not covered" >    return await connectAndQuery(query, params);</span>
+<span class="cstat-no" title="statement not covered" >    return await mySqlConnectAndQuery(query, params);</span>
   }
 &nbsp;
 <span class="fstat-no" title="function not covered" >  st</span>atic async getIntervalTarget(id) {
     const query = <span class="cstat-no" title="statement not covered" >`SELECT interval_target.id, date_start, date_end, user_id, name, surname, goal_id, title, description FROM ${IntervalTarget.table_name} INNER JOIN users ON users.id = user_id INNER JOIN goal ON goal.id = goal_id WHERE interval_target.id = ?`;</span>
-<span class="cstat-no" title="statement not covered" >    return await connectAndQuery(query, id);</span>
+<span class="cstat-no" title="statement not covered" >    return await mySqlConnectAndQuery(query, id);</span>
   }
 &nbsp;
 <span class="fstat-no" title="function not covered" >  st</span>atic async createIntervalTarget(body) {
@@ -244,7 +242,7 @@ class IntervalTarget {
 <span class="cstat-no" title="statement not covered" >    if (newBody.includes(undefined)) {</span>
 <span class="cstat-no" title="statement not covered" >      throw new Error("Body");</span>
     }
-<span class="cstat-no" title="statement not covered" >    return await connectAndQuery(query, newBody);</span>
+<span class="cstat-no" title="statement not covered" >    return await mySqlConnectAndQuery(query, newBody);</span>
   }
 &nbsp;
 <span class="fstat-no" title="function not covered" >  st</span>atic async updateIntervalTarget(currentData, body) {
@@ -255,13 +253,13 @@ class IntervalTarget {
       body.goal_id ?? currentData.goal_id,
       currentData.id,
     ];
-<span class="cstat-no" title="statement not covered" >    return await connectAndQuery(query, newData);</span>
+<span class="cstat-no" title="statement not covered" >    return await mySqlConnectAndQuery(query, newData);</span>
   }
 &nbsp;
 <span class="fstat-no" title="function not covered" >  st</span>atic async deleteIntervalTarget(id) {
     const query = <span class="cstat-no" title="statement not covered" >`DELETE FROM ${IntervalTarget.table_name} WHERE id = ?`;</span>
     let deletedInterval = <span class="cstat-no" title="statement not covered" >await this.getIntervalTarget(id);</span>
-    const result = <span class="cstat-no" title="statement not covered" >connectAndQuery(query, [id]);</span>
+    const result = <span class="cstat-no" title="statement not covered" >mySqlConnectAndQuery(query, [id]);</span>
 <span class="cstat-no" title="statement not covered" >    return [result, deletedInterval];</span>
   }
 }
@@ -269,21 +267,27 @@ class IntervalTarget {
 module.exports = IntervalTarget;
 &nbsp;</pre></td></tr></table></pre>
 
-                <div class='push'></div><!-- for sticky footer -->
-            </div><!-- /wrapper -->
-            <div class='footer quiet pad2 space-top1 center small'>
-                Code coverage generated by
-                <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2024-02-18T15:12:59.269Z
-            </div>
-        <script src="../../../prettify.js"></script>
-        <script>
-            window.onload = function () {
-                prettyPrint();
-            };
-        </script>
-        <script src="../../../sorter.js"></script>
-        <script src="../../../block-navigation.js"></script>
-    </body>
+      <div class="push"></div>
+      <!-- for sticky footer -->
+    </div>
+    <!-- /wrapper -->
+    <div class="footer quiet pad2 space-top1 center small">
+      Code coverage generated by
+      <a
+        href="https://istanbul.js.org/"
+        target="_blank"
+        rel="noopener noreferrer"
+        >istanbul</a
+      >
+      at 2024-02-18T15:12:59.269Z
+    </div>
+    <script src="../../../prettify.js"></script>
+    <script>
+      window.onload = function () {
+        prettyPrint();
+      };
+    </script>
+    <script src="../../../sorter.js"></script>
+    <script src="../../../block-navigation.js"></script>
+  </body>
 </html>
-    

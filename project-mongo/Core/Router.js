@@ -6,7 +6,7 @@ const router = express.Router();
 
 router
   .use("/users", routerUsers)
-  .use("/interval-target", routerInterval)
-  .use("/goal", routerGoal);
+  .use("/interval-targets", routerInterval)
+  .use("/goals", routerGoal);
 
 module.exports = router;

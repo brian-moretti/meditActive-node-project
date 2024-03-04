@@ -1,19 +1,30 @@
+const { MongoConnectToDb } = require("../../../../project-mongo/Core/Database");
+const GoalModel = require("../GoalModel");
+const paginations = require("../../../utilities/paginations");
 const { ObjectId } = require("mongodb");
-const { MongoConnectToDb } = require("../../Core/Database");
 
-class Goal {
-  static collection = "goal";
+class MongoGoalModel extends GoalModel {
+  constructor() {
+    super();
+  }
 
-  static async getAll() {
+  static async getAll(params) {
+    let p = paginations(params);
     const db = await MongoConnectToDb();
-    return await db.collection(this.collection).find().toArray();
+    return await db
+      .collection(GoalModel.name)
+      .find()
+      .sort({ _id: 1 })
+      .skip(p.offsetData)
+      .limit(p.maxData)
+      .toArray();
   }
 
   static async getGoal(id) {
     const db = await MongoConnectToDb();
     if (ObjectId.isValid(id)) {
       return await db
-        .collection(this.collection)
+        .collection(GoalModel.name)
         .findOne({ _id: new ObjectId(id) });
     } else {
       throw new Error("Id not valid");
@@ -22,7 +33,7 @@ class Goal {
 
   static async createGoal(body) {
     const db = await MongoConnectToDb();
-    return await db.collection(this.collection).insertOne(body);
+    return await db.collection(GoalModel.name).insertOne(body);
   }
 
   static async updateGoal(currentData, body) {
@@ -34,7 +45,7 @@ class Goal {
     };
     if (ObjectId.isValid(currentData._id)) {
       return await db
-        .collection(this.collection)
+        .collection(GoalModel.name)
         .updateOne({ _id: currentData._id }, { $set: newBody });
     } else {
       throw new Error("Id not valid");
@@ -46,7 +57,7 @@ class Goal {
     if (ObjectId.isValid(id)) {
       let deletedGoal = await this.getGoal(id);
       const result = await db
-        .collection(this.collection)
+        .collection(GoalModel.name)
         .deleteOne({ _id: new ObjectId(id) });
       return [result, deletedGoal];
     } else {
@@ -55,4 +66,4 @@ class Goal {
   }
 }
 
-module.exports = Goal;
+module.exports = MongoGoalModel;

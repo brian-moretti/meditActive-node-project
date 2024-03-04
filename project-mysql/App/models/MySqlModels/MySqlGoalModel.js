@@ -1,21 +1,25 @@
-const mySqlConnectAndQuery = require("../../Core/Database");
+const mySqlConnectAndQuery = require("../../../Core/Database");
+const paginations = require("../../../utilities/useDatabase");
+const GoalModel = require("../GoalModel");
 
-class Goal {
-  static tableName = "goal";
+class MySqlGoalModel extends GoalModel {
+  constructor() {
+    super();
+  }
 
   static async getAll(params) {
     let p = paginations(params);
-    const query = `SELECT * FROM ${this.tableName} LIMIT ${p.maxData} OFFSET ${p.offsetData}`;
+    const query = `SELECT * FROM ${GoalModel.name} LIMIT ${p.maxData} OFFSET ${p.offsetData}`;
     return await mySqlConnectAndQuery(query);
   }
 
   static async getGoal(id) {
-    const query = `SELECT * FROM ${this.tableName} WHERE id = ?`;
+    const query = `SELECT * FROM ${GoalModel.name} WHERE id = ?`;
     return await mySqlConnectAndQuery(query, id);
   }
 
   static async createGoal(body) {
-    const query = `INSERT INTO ${this.tableName} (title, description) VALUES (?,?)`;
+    const query = `INSERT INTO ${GoalModel.name} (title, description) VALUES (?,?)`;
     let newBody = [body.title, body.description];
     if (newBody.includes(undefined)) {
       throw new Error("Body");
@@ -24,7 +28,7 @@ class Goal {
   }
 
   static async updateGoal(currentBody, body) {
-    const query = `UPDATE ${this.tableName} SET title = ?, description = ? WHERE id = ?`;
+    const query = `UPDATE ${GoalModel.name} SET title = ?, description = ? WHERE id = ?`;
     let newBody = [
       body.title ?? currentBody.title,
       body.description ?? currentBody.description,
@@ -34,11 +38,11 @@ class Goal {
   }
 
   static async deleteGoal(id) {
-    const query = `DELETE FROM ${this.tableName} WHERE id = ?`;
+    const query = `DELETE FROM ${GoalModel.name} WHERE id = ?`;
     let deletedGoal = await this.getGoal(id);
     const result = await mySqlConnectAndQuery(query, id);
     return [result, deletedGoal];
   }
 }
 
-module.exports = Goal;
+module.exports = MySqlGoalModel;

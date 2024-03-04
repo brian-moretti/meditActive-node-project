@@ -1,13 +1,17 @@
 const { ObjectId } = require("mongodb");
-const { MongoConnectToDb } = require("../../Core/Database");
-const { collection: userCollection } = require("./user");
-const { collection: goalCollection } = require("./goal");
+const { MongoConnectToDb } = require("../../../../project-mongo/Core/Database");
+const IntervalTargetModel = require("../IntervalTargetModel");
+const paginations = require("../../../utilities/paginations");
+const { name: userCollection } = require("../UserModel");
+const { name: goalCollection } = require("../GoalModel");
 
-class IntervalTarget {
-  static collection = "interval_target";
-
+class MongoIntervalTargetModel extends IntervalTargetModel {
+  constructor() {
+    super();
+  }
   static async getAll(req) {
     const db = await MongoConnectToDb();
+    let p = paginations(req);
     let fromDateStart = req.date_start ?? null;
     let fromDateEnd = req.date_end ?? null;
     let goalTitle = req.goal_title ?? null;
@@ -27,7 +31,7 @@ class IntervalTarget {
       filter["Goal.title"] = { $regex: `^${goalTitle}`, $options: "i" };
     }
     return await db
-      .collection(this.collection)
+      .collection(IntervalTargetModel.name)
       .aggregate([
         {
           $lookup: {
@@ -53,6 +57,8 @@ class IntervalTarget {
           },
         },
       ])
+      .skip(p.offsetData)
+      .limit(p.maxData)
       .toArray();
   }
 
@@ -60,7 +66,7 @@ class IntervalTarget {
     const db = await MongoConnectToDb();
     if (ObjectId.isValid(id)) {
       return await db
-        .collection(this.collection)
+        .collection(IntervalTargetModel.name)
         .aggregate([
           { $match: { _id: new ObjectId(id) } },
           {
@@ -99,7 +105,7 @@ class IntervalTarget {
     body.date_end = new Date(body.date_end);
     body.user_id = new ObjectId(body.user_id);
     body.goal_id = new ObjectId(body.goal_id);
-    return await db.collection(this.collection).insertOne(body);
+    return await db.collection(IntervalTargetModel.name).insertOne(body);
   }
 
   static async updateIntervalTarget(currentData, body) {
@@ -112,7 +118,7 @@ class IntervalTarget {
     };
     if (ObjectId.isValid(currentData._id)) {
       return await db
-        .collection(this.collection)
+        .collection(IntervalTargetModel.name)
         .updateOne({ _id: currentData._id }, { $set: newBody });
     } else {
       throw new Error("Id not valid");
@@ -124,7 +130,7 @@ class IntervalTarget {
     if (ObjectId.isValid(id)) {
       let deletedInterval = await this.getIntervalTarget(id);
       const result = await db
-        .collection(this.collection)
+        .collection(IntervalTargetModel.name)
         .deleteOne({ _id: new ObjectId(id) });
       return [result, deletedInterval];
     } else {
@@ -133,4 +139,4 @@ class IntervalTarget {
   }
 }
 
-module.exports = IntervalTarget;
+module.exports = MongoIntervalTargetModel;

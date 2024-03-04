@@ -1,8 +1,11 @@
 const mySql = require("mysql2/promise");
-const configDb = require("../config");
+const { MongoClient } = require("mongodb");
+const { configMySqlDb, configMongoDb } = require("../config");
 
-async function connectAndQuery(query, params) {
-  const connect = await mySql.createConnection(configDb);
+//* MYSQL DATABASE SECTION
+
+async function mySqlConnectAndQuery(query, params) {
+  const connect = await mySql.createConnection(configMySqlDb);
   let statement;
   try {
     [statement] = await connect.query(query, params);
@@ -15,4 +18,19 @@ async function connectAndQuery(query, params) {
   return statement;
 }
 
-module.exports = connectAndQuery;
+//* MONGO DATABASE SECTION
+
+const uriDynamic = `${configMongoDb.mongo_connection}${configMongoDb.user}:${configMongoDb.password}@${configMongoDb.mongo_project}/${configMongoDb.database}${configMongoDb.db_option}`;
+
+const client = new MongoClient(uriDynamic);
+
+async function MongoConnectToDb() {
+  try {
+    await client.connect();
+    return client.db();
+  } catch (error) {
+    return error;
+  }
+}
+
+module.exports = { mySqlConnectAndQuery, MongoConnectToDb };

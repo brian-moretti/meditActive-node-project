@@ -1,68 +1,64 @@
-
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-
-<head>
+  <head>
     <title>Code coverage report for project-mysql/App/models/user.js</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="../../../prettify.css" />
     <link rel="stylesheet" href="../../../base.css" />
     <link rel="shortcut icon" type="image/x-icon" href="../../../favicon.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <style type='text/css'>
-        .coverage-summary .sorter {
-            background-image: url(../../../sort-arrow-sprite.png);
-        }
+    <style type="text/css">
+      .coverage-summary .sorter {
+        background-image: url(../../../sort-arrow-sprite.png);
+      }
     </style>
-</head>
-    
-<body>
-<div class='wrapper'>
-    <div class='pad1'>
-        <h1><a href="../../../index.html">All files</a> / <a href="index.html">project-mysql/App/models</a> user.js</h1>
-        <div class='clearfix'>
-            
-            <div class='fl pad1y space-right2'>
-                <span class="strong">36.84% </span>
-                <span class="quiet">Statements</span>
-                <span class='fraction'>7/19</span>
-            </div>
-        
-            
-            <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
-                <span class="quiet">Branches</span>
-                <span class='fraction'>0/8</span>
-            </div>
-        
-            
-            <div class='fl pad1y space-right2'>
-                <span class="strong">40% </span>
-                <span class="quiet">Functions</span>
-                <span class='fraction'>2/5</span>
-            </div>
-        
-            
-            <div class='fl pad1y space-right2'>
-                <span class="strong">36.84% </span>
-                <span class="quiet">Lines</span>
-                <span class='fraction'>7/19</span>
-            </div>
-        
-            
+  </head>
+
+  <body>
+    <div class="wrapper">
+      <div class="pad1">
+        <h1>
+          <a href="../../../index.html">All files</a> /
+          <a href="index.html">project-mysql/App/models</a> user.js
+        </h1>
+        <div class="clearfix">
+          <div class="fl pad1y space-right2">
+            <span class="strong">36.84% </span>
+            <span class="quiet">Statements</span>
+            <span class="fraction">7/19</span>
+          </div>
+
+          <div class="fl pad1y space-right2">
+            <span class="strong">0% </span>
+            <span class="quiet">Branches</span>
+            <span class="fraction">0/8</span>
+          </div>
+
+          <div class="fl pad1y space-right2">
+            <span class="strong">40% </span>
+            <span class="quiet">Functions</span>
+            <span class="fraction">2/5</span>
+          </div>
+
+          <div class="fl pad1y space-right2">
+            <span class="strong">36.84% </span>
+            <span class="quiet">Lines</span>
+            <span class="fraction">7/19</span>
+          </div>
         </div>
         <p class="quiet">
-            Press <em>n</em> or <em>j</em> to go to the next uncovered block, <em>b</em>, <em>p</em> or <em>k</em> for the previous block.
+          Press <em>n</em> or <em>j</em> to go to the next uncovered block,
+          <em>b</em>, <em>p</em> or <em>k</em> for the previous block.
         </p>
         <template id="filterTemplate">
-            <div class="quiet">
-                Filter:
-                <input oninput="onInput()" type="search" id="fileSearch">
-            </div>
+          <div class="quiet">
+            Filter:
+            <input oninput="onInput()" type="search" id="fileSearch" />
+          </div>
         </template>
-    </div>
-    <div class='status-line low'></div>
-    <pre><table class="coverage">
+      </div>
+      <div class="status-line low"></div>
+      <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
 <a name='L3'></a><a href='#L3'>3</a>
@@ -151,19 +147,19 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">const connectAndQuery = require("../../Core/Database");
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">const mySqlConnectAndQuery = require("../../Core/Database");
 &nbsp;
 class User {
   static tableName = "users";
 &nbsp;
   static async getAll() {
     const query = `SELECT * FROM ${this.tableName}`;
-    return await connectAndQuery(query);
+    return await mySqlConnectAndQuery(query);
   }
 &nbsp;
   static async getUser(id) {
     const query = `SELECT * FROM ${this.tableName} WHERE id = ?`;
-    return await connectAndQuery(query, id);
+    return await mySqlConnectAndQuery(query, id);
   }
 &nbsp;
 <span class="fstat-no" title="function not covered" >  st</span>atic async createUser(body) {
@@ -172,7 +168,7 @@ class User {
 <span class="cstat-no" title="statement not covered" >    if (newBody.includes(undefined)) {</span>
 <span class="cstat-no" title="statement not covered" >      throw new Error("Body");</span>
     }
-<span class="cstat-no" title="statement not covered" >    return await connectAndQuery(query, newBody);</span>
+<span class="cstat-no" title="statement not covered" >    return await mySqlConnectAndQuery(query, newBody);</span>
   }
 &nbsp;
 <span class="fstat-no" title="function not covered" >  st</span>atic async updateUser(currentData, body) {
@@ -183,13 +179,13 @@ class User {
       body.email ?? currentData.email,
       currentData.id,
     ];
-<span class="cstat-no" title="statement not covered" >    return await connectAndQuery(query, newBody);</span>
+<span class="cstat-no" title="statement not covered" >    return await mySqlConnectAndQuery(query, newBody);</span>
   }
 &nbsp;
 <span class="fstat-no" title="function not covered" >  st</span>atic async deleteUser(id) {
     const query = <span class="cstat-no" title="statement not covered" >`DELETE FROM ${User.tableName} WHERE id = ?`;</span>
     let deletedUser = <span class="cstat-no" title="statement not covered" >await this.getUser(id);</span>
-    const result = <span class="cstat-no" title="statement not covered" >await connectAndQuery(query, id);</span>
+    const result = <span class="cstat-no" title="statement not covered" >await mySqlConnectAndQuery(query, id);</span>
 <span class="cstat-no" title="statement not covered" >    return [result, deletedUser];</span>
   }
 }
@@ -197,21 +193,27 @@ class User {
 module.exports = User;
 &nbsp;</pre></td></tr></table></pre>
 
-                <div class='push'></div><!-- for sticky footer -->
-            </div><!-- /wrapper -->
-            <div class='footer quiet pad2 space-top1 center small'>
-                Code coverage generated by
-                <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2024-02-18T15:12:59.269Z
-            </div>
-        <script src="../../../prettify.js"></script>
-        <script>
-            window.onload = function () {
-                prettyPrint();
-            };
-        </script>
-        <script src="../../../sorter.js"></script>
-        <script src="../../../block-navigation.js"></script>
-    </body>
+      <div class="push"></div>
+      <!-- for sticky footer -->
+    </div>
+    <!-- /wrapper -->
+    <div class="footer quiet pad2 space-top1 center small">
+      Code coverage generated by
+      <a
+        href="https://istanbul.js.org/"
+        target="_blank"
+        rel="noopener noreferrer"
+        >istanbul</a
+      >
+      at 2024-02-18T15:12:59.269Z
+    </div>
+    <script src="../../../prettify.js"></script>
+    <script>
+      window.onload = function () {
+        prettyPrint();
+      };
+    </script>
+    <script src="../../../sorter.js"></script>
+    <script src="../../../block-navigation.js"></script>
+  </body>
 </html>
-    

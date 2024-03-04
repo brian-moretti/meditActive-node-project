@@ -1,20 +1,22 @@
 const { ObjectId } = require("mongodb");
-const { MongoConnectToDb } = require("../../Core/Database");
+const { MongoConnectToDb } = require("../../../Core/Database");
+const UserModel = require("../UserModel");
+const paginations = require("../../../utilities/paginations");
 
-class User {
-  static collection = "users";
+class MongoUserModel extends UserModel {
+  constructor() {
+    super();
+  }
 
   static async getAll(params) {
-    const page = params.page || 0;
-    const maxUsers = 3;
-    const offsetData = page <= 1 ? 0 : (page - 1) * maxUsers;
+    let p = paginations(params);
     const db = await MongoConnectToDb();
     return await db
-      .collection(this.collection)
+      .collection(UserModel.name)
       .find()
       .sort({ name: 1 })
-      .skip(offsetData)
-      .limit(maxUsers)
+      .skip(p.offsetData)
+      .limit(p.maxData)
       .toArray();
   }
 
@@ -22,7 +24,7 @@ class User {
     const db = await MongoConnectToDb();
     if (ObjectId.isValid(id)) {
       return await db
-        .collection(this.collection)
+        .collection(UserModel.name)
         .findOne({ _id: new ObjectId(id) });
     } else {
       throw new Error("Id not valid");
@@ -31,7 +33,7 @@ class User {
 
   static async createUser(body) {
     const db = await MongoConnectToDb();
-    return await db.collection(this.collection).insertOne(body);
+    return await db.collection(UserModel.name).insertOne(body);
   }
 
   static async updateUser(currentData, body) {
@@ -44,7 +46,7 @@ class User {
     };
     if (ObjectId.isValid(currentData._id)) {
       return await db
-        .collection(this.collection)
+        .collection(UserModel.name)
         .updateOne({ _id: currentData._id }, { $set: newBody });
     } else {
       throw new Error("Id not valid");
@@ -56,7 +58,7 @@ class User {
     if (ObjectId.isValid(id)) {
       let deletedUser = await this.getUser(id);
       const result = await db
-        .collection(this.collection)
+        .collection(UserModel.name)
         .deleteOne({ _id: new ObjectId(id) });
       return [result, deletedUser];
     } else {
@@ -65,4 +67,4 @@ class User {
   }
 }
 
-module.exports = User;
+module.exports = MongoUserModel;

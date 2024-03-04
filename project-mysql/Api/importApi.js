@@ -1,13 +1,13 @@
 const fs = require("fs");
-const Goal = require("../App/models/goal");
-const connectAndQuery = require("../Core/Database");
+const Goal = require("../App/models/Goal");
+const mySqlConnectAndQuery = require("../Core/Database");
 
 let jsonData = JSON.parse(fs.readFileSync(`${__dirname}/goal.json`));
 
 async function createGoals(json) {
   let query = `INSERT INTO ${Goal.tableName} (title, description) VALUES ?`;
   const values = json.map((element) => Object.values(element));
-  return await connectAndQuery(query, [values]);
+  return await mySqlConnectAndQuery(query, [values]);
 }
 
 const importData = async () => {
