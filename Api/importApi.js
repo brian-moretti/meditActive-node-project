@@ -1,18 +1,31 @@
 const fs = require("fs");
-const Goal = require("../App/models/Goal");
-const mySqlConnectAndQuery = require("../Core/Database");
+const { MongoConnectToDb, mySqlConnectAndQuery } = require("../Core/Database");
+const GoalModel = require("../App/models/GoalModel");
 
 let jsonData = JSON.parse(fs.readFileSync(`${__dirname}/goal.json`));
 
+//* MYSQL
 async function createGoals(json) {
-  let query = `INSERT INTO ${Goal.tableName} (title, description) VALUES ?`;
+  let query = `INSERT INTO ${GoalModel.name} (title, description) VALUES ?`;
   const values = json.map((element) => Object.values(element));
   return await mySqlConnectAndQuery(query, [values]);
 }
 
+//* MONGO
+async function createMany(json) {
+  const db = await MongoConnectToDb();
+  return await db.collection(GoalModel.name).insertMany(json);
+}
+
 const importData = async () => {
   try {
-    await createGoals(jsonData);
+    if (process.argv[2] === "--mongo") {
+      await createMany(jsonData);
+    } else if (process.argv[2] === "--mysql") {
+      await createGoals(jsonData);
+    } else {
+      console.error("Check README file");
+    }
     console.log("Data imported successfully");
     process.exit();
   } catch (error) {
