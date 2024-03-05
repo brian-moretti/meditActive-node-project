@@ -27,7 +27,7 @@ class MySqlGoalModel extends GoalModel {
     return await mySqlConnectAndQuery(query, newBody);
   }
 
-  static async updateGoal(currentBody, body) {
+  static async updateGoal([currentBody], body) {
     const query = `UPDATE ${GoalModel.name} SET title = ?, description = ? WHERE id = ?`;
     let newBody = [
       body.title ?? currentBody.title,

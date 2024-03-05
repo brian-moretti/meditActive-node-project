@@ -54,7 +54,7 @@ class MySqlIntervalTargetModel extends IntervalTargetModel {
     return await mySqlConnectAndQuery(query, newBody);
   }
 
-  static async updateIntervalTarget(currentData, body) {
+  static async updateIntervalTarget([currentData], body) {
     const query = `UPDATE ${IntervalTargetModel.name} SET date_start = ?, date_end = ?, goal_id = ? WHERE id = ?`;
     const newData = [
       body.date_start ?? currentData.date_start,

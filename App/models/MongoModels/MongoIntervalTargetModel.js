@@ -108,7 +108,7 @@ class MongoIntervalTargetModel extends IntervalTargetModel {
     return await db.collection(IntervalTargetModel.name).insertOne(body);
   }
 
-  static async updateIntervalTarget(currentData, body) {
+  static async updateIntervalTarget([currentData], body) {
     const db = await MongoConnectToDb();
     let newBody = {
       date_start: new Date(body.date_start) ?? currentData.date_start,
@@ -116,7 +116,7 @@ class MongoIntervalTargetModel extends IntervalTargetModel {
       goal_id: new ObjectId(body.goal_id) ?? currentData.goal_id,
       _id: currentData._id,
     };
-    if (ObjectId.isValid(currentData._id)) {
+   if (ObjectId.isValid(currentData._id)) {
       return await db
         .collection(IntervalTargetModel.name)
         .updateOne({ _id: currentData._id }, { $set: newBody });

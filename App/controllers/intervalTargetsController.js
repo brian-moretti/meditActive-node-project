@@ -4,6 +4,7 @@ const intervalTarget_index = async (req, res) => {
   try {
     const IntervalTarget = await chooseModel(req, "interval_targets");
     const result = await IntervalTarget.getAll(req.query);
+    console.log(req.query);
     if (result.length <= 0 && Object.keys(req.query).length > 0) {
       return res
         .status(404)
@@ -65,10 +66,12 @@ const intervalTarget_create = async (req, res) => {
 const intervalTarget_update = async (req, res) => {
   try {
     const IntervalTarget = await chooseModel(req, "interval_targets");
-
-    const [intervalToUpdate] = await IntervalTarget.getIntervalTarget(
+    const intervalToUpdate = await IntervalTarget.getIntervalTarget(
       req.params.id
     );
+    if (intervalToUpdate <= 0) {
+      return res.status(404).json({ Error: "Goal not founded" });
+    }
     const result = await IntervalTarget.updateIntervalTarget(
       intervalToUpdate,
       req.body

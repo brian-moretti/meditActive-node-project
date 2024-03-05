@@ -65,12 +65,9 @@ const user_create = async (req, res) => {
 const user_update = async (req, res) => {
   try {
     const User = await chooseModel(req, "users");
-    let userToUpdate;
-
-    if (req.databaseModels["Mongo"]) {
-      userToUpdate = await User.getUser(req.params.id);
-    } else {
-      [userToUpdate] = await User.getUser(req.params.id);
+    const userToUpdate = await User.getUser(req.params.id);
+    if (userToUpdate <= 0) {
+      return res.status(404).json({ Error: "User not founded" });
     }
     const result = await User.updateUser(userToUpdate, req.body);
 

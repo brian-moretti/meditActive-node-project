@@ -1,3 +1,4 @@
+const { log } = require("console");
 const chooseModel = require("../../Core/utilities/chooseModel");
 
 const goal_index = async (req, res) => {
@@ -61,14 +62,11 @@ const goal_create = async (req, res) => {
 const goal_update = async (req, res) => {
   try {
     const Goal = await chooseModel(req, "goals");
-    let goalToUpdate;
-    if (req.databaseModels["Mongo"]) {
-      goalToUpdate = await Goal.getGoal(req.params.id);
-    } else {
-      [goalToUpdate] = await Goal.getGoal(req.params.id);
+    const goalToUpdate = await Goal.getGoal(req.params.id);
+    if (goalToUpdate <= 0) {
+      return res.status(404).json({ Error: "Goal not founded" });
     }
     const result = await Goal.updateGoal(goalToUpdate, req.body);
-
     if (req.databaseModels["Mongo"]) {
       if (result.modifiedCount >= 0) {
         res

@@ -27,7 +27,7 @@ class MySqlUserModel extends UserModel {
     return await mySqlConnectAndQuery(query, newBody);
   }
 
-  static async updateUser(currentData, body) {
+  static async updateUser([currentData], body) {
     const query = `UPDATE ${UserModel.name} SET name = ?, surname = ?, email = ? WHERE id = ?`;
     let newBody = [
       body.name ?? currentData.name,

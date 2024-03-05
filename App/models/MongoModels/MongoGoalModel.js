@@ -43,6 +43,7 @@ class MongoGoalModel extends GoalModel {
       description: body.description ?? currentData.description,
       _id: currentData._id,
     };
+    console.log(currentData);
     if (ObjectId.isValid(currentData._id)) {
       return await db
         .collection(GoalModel.name)
