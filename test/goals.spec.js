@@ -1,8 +1,9 @@
 const sinon = require("sinon");
 const { expect } = require("chai");
-const Goal = require("../App/models/Goal");
 const goalsController = require("../App/controllers/goalsController");
 const mySql = require("mysql2/promise");
+const GoalModel = require("../App/models/GoalModel");
+const MySqlGoalModel = require("../App/models/MySqlModels/MySqlGoalModel");
 
 describe("testing goal model", () => {
   let connectAndQueryStub, createConnectionStub;
@@ -15,7 +16,7 @@ describe("testing goal model", () => {
   });
   describe("testing getAll", () => {
     it("testing on success", async () => {
-      const query = `SELECT * FROM ${Goal.tableName}`;
+      const query = `SELECT * FROM ${GoalModel.name}`;
       const fakeQueryResult = [
         { id: 1, title: "title", description: "description" },
       ];
@@ -24,7 +25,7 @@ describe("testing goal model", () => {
         query: connectAndQueryStub,
         end: sinon.stub().resolves(),
       });
-      const result = await Goal.getAll();
+      const result = await MySqlGoalModel.getAll();
       expect(connectAndQueryStub.calledOnce).to.be.true;
       expect(connectAndQueryStub.calledOnceWith(query)).to.be.true;
       expect(result).to.deep.equal(fakeQueryResult[0]);
@@ -33,7 +34,7 @@ describe("testing goal model", () => {
 
   describe("testing getGoal", () => {
     it("testing on success", async () => {
-      const query = `SELECT * FROM ${Goal.tableName} WHERE id = ?`;
+      const query = `SELECT * FROM ${GoalModel.name} WHERE id = ?`;
       const id = 1;
       const fakeQueryResult = [
         { id: 1, title: "title", description: "description" },
@@ -43,7 +44,7 @@ describe("testing goal model", () => {
         query: connectAndQueryStub,
         end: sinon.stub().resolves(),
       });
-      const result = await Goal.getGoal(id);
+      const result = await MySqlGoalModel.getGoal(id);
       expect(connectAndQueryStub.calledOnce).to.be.true;
       expect(connectAndQueryStub.calledOnceWith(query)).to.be.true;
       expect(result).to.deep.equal(fakeQueryResult[0]);
@@ -56,7 +57,7 @@ describe("testing Goal_index controller function", () => {
   beforeEach(() => {
     req = {};
     res = { status: sinon.stub().returnsThis(), json: sinon.stub() };
-    getAllStub = sinon.stub(Goal, "getAll");
+    getAllStub = sinon.stub(MySqlGoalModel, "getAll");
   });
   afterEach(() => {
     getAllStub.restore();
@@ -85,7 +86,7 @@ describe("testing Goal_details controller function", () => {
   beforeEach(() => {
     req = { params: { id: 1 } };
     res = { status: sinon.stub().returnsThis(), json: sinon.stub() };
-    getGoalStub = sinon.stub(Goal, "getGoal");
+    getGoalStub = sinon.stub(MySqlGoalModel, "getGoal");
   });
   afterEach(() => {
     getGoalStub.restore();
@@ -124,7 +125,7 @@ describe("testing Goal_create controller function", () => {
       body: { title: "title", description: "description" },
     };
     res = { status: sinon.stub().returnsThis(), json: sinon.stub() };
-    createGoalStub = sinon.stub(Goal, "createGoal");
+    createGoalStub = sinon.stub(MySqlGoalModel, "createGoal");
   });
   afterEach(() => {
     createGoalStub.restore();

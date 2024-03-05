@@ -4,7 +4,8 @@
   "version": "1.0.0",
   "main": "app.js",
   "scripts": {
-    "dev": "node --watch app.js",
+    "dev-mysql": "node --watch app --mysql",
+    "dev-mongo": "node --watch app --mongo",
     "test": "mocha '**/**.spec.js'",
     "coverage": "nyc --reporter=html --reporter=text npm run test"
   },

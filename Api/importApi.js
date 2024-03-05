@@ -21,12 +21,12 @@ const importData = async () => {
   try {
     if (process.argv[2] === "--mongo") {
       await createMany(jsonData);
+      console.log("Data imported successfully");
     } else if (process.argv[2] === "--mysql") {
       await createGoals(jsonData);
+      console.log("Data imported successfully");
     } else {
-      console.error("Check README file");
     }
-    console.log("Data imported successfully");
     process.exit();
   } catch (error) {
     console.error(error);
