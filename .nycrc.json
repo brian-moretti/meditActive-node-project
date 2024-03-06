@@ -1,9 +1,0 @@
-{
-  "all": true,
-  "include": ["**/*.js"],
-  "exclude": ["**/*.spec.js", "reports/**"],
-  "check-coverage": true,
-  "report-dir": "./reports",
-  "skip-full": true,
-  "temp-dir": "./.nyc_output"
-}
